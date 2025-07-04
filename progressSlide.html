@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slideshow with Progress Bar</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #slideshow {
+      position: relative;
+      width: 600px;
+      height: 400px;
+      margin: 40px auto;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    #slideshow img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 5px;
+      background-color: #ddd;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background-color: #4caf50;
+      transition: width linear;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="slideshow">
+    <img id="slide" src="prod1.png" alt="Slide">
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+  </div>
+
+  <script>
+    const images = [
+      "prod1.png",
+      "prod2.png",
+      "prod4.png"
+    ];
+
+    let currentIndex = 0;
+    const slide = document.getElementById('slide');
+    const progress = document.getElementById('progress');
+    const duration = 3000; // 3 seconds per slide
+
+    function showSlide(index) {
+      slide.src = images[index];
+      progress.style.transition = 'none';
+      progress.style.width = '0%';
+      setTimeout(() => {
+        progress.style.transition = `width ${duration}ms linear`;
+        progress.style.width = '100%';
+      }, 10); // slight delay to trigger CSS transition
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showSlide(currentIndex);
+    }
+
+    // Start the slideshow
+    showSlide(currentIndex);
+    setInterval(nextSlide, duration);
+  </script>
+
+</body>
+</html>
